@@ -19,7 +19,7 @@ export default Ember.ObjectProxy.extend(RecordKeeperMixin, {
         target: content,
         path,
         key,
-        before: content.get(key),
+        before: Ember.get(content, key),
         after: value
       }));
 

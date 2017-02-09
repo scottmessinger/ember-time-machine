@@ -8,9 +8,9 @@ const {
 } = Ember;
 
 export function wrapValue(obj, key, value) {
-  let state = obj.get('_rootMachineState');
-  let availableMachines = state.get('availableMachines');
-  let fullPath = obj.get('_path').concat(key);
+  let state = get(obj, '_rootMachineState');
+  let availableMachines = get(state, 'availableMachines');
+  let fullPath = get(obj, '_path').concat(key);
   let Machine, machine;
 
   if (availableMachines && availableMachines.has(value)) {
@@ -28,7 +28,7 @@ export function wrapValue(obj, key, value) {
       machine = Machine.create({
         content: value,
         _path: fullPath,
-        _rootMachine: obj.get('_rootMachine')
+        _rootMachine: get(obj, '_rootMachine')
       });
 
       availableMachines.set(value, machine);
@@ -52,9 +52,9 @@ export function unwrapValue(value) {
 }
 
 function shouldWrapValue(obj, key, value) {
-  let state = obj.get('_rootMachineState');
-  let maxDepth = state.get('maxDepth');
-  let fullPath = obj.get('_path').concat(key);
+  let state = get(obj, '_rootMachineState');
+  let maxDepth = get(state, 'maxDepth');
+  let fullPath = get(obj, '_path').concat(key);
   let valueType = typeOf(value);
 
   return (valueType === 'object' || valueType === 'instance' || valueType === 'array') &&
